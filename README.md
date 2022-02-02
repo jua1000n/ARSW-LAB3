@@ -9,9 +9,14 @@
 
 Control de hilos con wait/notify. Productor/consumidor.
 
-1. Revise el funcionamiento del programa y ejecútelo. Mientras esto ocurren, ejecute jVisualVM y revise el consumo de CPU del proceso correspondiente. A qué se debe este consumo?, cual es la clase responsable?
+1. Revise el funcionamiento del programa y ejecútelo. Mientras esto ocurren, ejecute jVisualVM y revise el consumo de CPU del proceso correspondiente. 
+   - A qué se debe este consumo?: La clase Producer tien un sleep el cual genera que sea mas limitado al momento de consumir recursos, en este caso tiene 1 segundo, en la clase consume se ecnuentra deslimitada esta hace muchos llamados que hacen consumo de la CPU ya que producer y consume deberian tener un sleep equivalente para que no se desborde el consumo
+   - Cual es la clase responsable?: La Clase que consume mas recursos del CPU es la clase Consumer
+	
 2. Haga los ajustes necesarios para que la solución use más eficientemente la CPU, teniendo en cuenta que -por ahora- la producción es lenta y el consumo es rápido. Verifique con JVisualVM que el consumo de CPU se reduzca.
+   - Para hacer que sea mas eficiente se coloca un sleep con el mismo tiempo que se establecio en la clase Producer en la clase Consumer.
 3. Haga que ahora el productor produzca muy rápido, y el consumidor consuma lento. Teniendo en cuenta que el productor conoce un límite de Stock (cuantos elementos debería tener, a lo sumo en la cola), haga que dicho límite se respete. Revise el API de la colección usada como cola para ver cómo garantizar que dicho límite no se supere. Verifique que, al poner un límite pequeño para el 'stock', no haya consumo alto de CPU ni errores.
+	- Para poder limitar la cola se hace en el momento que se crea esta misma, se establece el tamaño.
 
 
 ##### Parte II. – Antes de terminar la clase.
