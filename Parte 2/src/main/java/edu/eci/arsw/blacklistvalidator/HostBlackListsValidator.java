@@ -84,6 +84,29 @@ public class HostBlackListsValidator {
         for(int i= 0;i< n; i++) {
             myThreads.get(i).threadStart();
         }
+        while(true) {
+            boolean c = false;
+            int cont = 0;
+            for (int i= 0;i< n;i++) {
+                if(myThreads.get(i).getBlackListOcurrences() != null) {
+                    if (myThreads.get(i).getBlackListOcurrences().size() >= BLACK_LIST_ALARM_COUNT) {
+                        c = true;
+                    }
+                }
+                if(myThreads.get(i).myThread.isAlive()) {
+                    cont++;
+                }
+            }
+            if(cont == n) {
+                break;
+            }
+            if(c) {
+                for (int i= 0;i< n;i++) {
+                    myThreads.get(i).stopThread();
+                }
+                break;
+            }
+        }
 
         //Espera a que termine los subProcesos para que pueda dar el reporte sin dar error
         for(int i= 0;i< n; i++) {

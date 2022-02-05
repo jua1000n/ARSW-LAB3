@@ -15,6 +15,7 @@ public class HostBlackListThread implements Runnable {
     int start;
     int end;
     int limit;
+    private boolean stop = false;
     String ipaddress;
     List<Integer> blackListOcurrences;
     int checkedListsCount=0;
@@ -51,11 +52,18 @@ public class HostBlackListThread implements Runnable {
 
                 ocurrencesCount++;
             }
+            if(stop) {
+                break;
+            }
         }
 
         this.blackListOcurrences = blackListOcurrences;
 
         //LOG.log(Level.INFO, "Checked Black Lists:{0} of {1}", new Object[]{start, end});
+    }
+
+    public void stopThread() {
+        stop = true;
     }
 
     public int getCheckedListsCount() {
