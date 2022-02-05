@@ -16,7 +16,7 @@ Control de hilos con wait/notify. Productor/consumidor.
 2. Haga los ajustes necesarios para que la solución use más eficientemente la CPU, teniendo en cuenta que -por ahora- la producción es lenta y el consumo es rápido. Verifique con JVisualVM que el consumo de CPU se reduzca.
    - Para hacer que sea mas eficiente se coloca un sleep con el mismo tiempo que se establecio en la clase Producer en la clase Consumer.
 3. Haga que ahora el productor produzca muy rápido, y el consumidor consuma lento. Teniendo en cuenta que el productor conoce un límite de Stock (cuantos elementos debería tener, a lo sumo en la cola), haga que dicho límite se respete. Revise el API de la colección usada como cola para ver cómo garantizar que dicho límite no se supere. Verifique que, al poner un límite pequeño para el 'stock', no haya consumo alto de CPU ni errores.
-	- Para poder limitar la cola se hace en el momento que se crea esta misma, se establece el tamaño.
+	- Para poder limitar la cola se hace en el momento que se crea esta misma, se establece el tamaño. Pero como el producer esta consumiendo mucho, por mas que se limite el tamaño de la cola esto produce que no se pueda generar un consumo bajo de CPU debido a que constantemente debe estar consultando el tamaño de la misma cola.
 
 
 ##### Parte II. – Antes de terminar la clase.

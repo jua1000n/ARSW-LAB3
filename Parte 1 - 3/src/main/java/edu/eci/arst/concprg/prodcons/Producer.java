@@ -32,10 +32,14 @@ public class Producer extends Thread {
     public void run() {
         while (true) {
 
-            dataSeed = dataSeed + rand.nextInt(100);
-            System.out.println("Producer added " + dataSeed);
+
+
             //queue.add(dataSeed);
-            queue.offer(dataSeed);
+            if(queue.size() <= 2){
+                dataSeed = dataSeed + rand.nextInt(100);
+                queue.add(dataSeed);
+                System.out.println("Producer added " + dataSeed);
+            }
             
             /*try {
                 Thread.sleep(1000);
