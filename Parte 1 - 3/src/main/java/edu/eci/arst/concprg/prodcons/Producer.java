@@ -32,8 +32,6 @@ public class Producer extends Thread {
     public void run() {
         while (true) {
 
-
-
             //queue.add(dataSeed);
             if(queue.size() <= 2){
                 dataSeed = dataSeed + rand.nextInt(100);

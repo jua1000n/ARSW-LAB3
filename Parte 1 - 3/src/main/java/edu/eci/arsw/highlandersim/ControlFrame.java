@@ -30,6 +30,7 @@ public class ControlFrame extends JFrame {
     private JPanel contentPane;
 
     private List<Immortal> immortals;
+    private Object synchro = new Object();
 
     private JTextArea output;
     private JLabel statisticsLabel;
@@ -91,14 +92,17 @@ public class ControlFrame extends JFrame {
                 /*
 				 * COMPLETAR
                  */
+                for (Immortal im : immortals) {
+                    im.setState(true);
+                }
+
                 int sum = 0;
                 for (Immortal im : immortals) {
                     sum += im.getHealth();
+                    //im.setState(false);
                 }
 
                 statisticsLabel.setText("<html>"+immortals.toString()+"<br>Health sum:"+ sum);
-                
-                
 
             }
         });
@@ -111,6 +115,10 @@ public class ControlFrame extends JFrame {
                 /**
                  * IMPLEMENTAR
                  */
+                for (Immortal im : immortals) {
+                    im.setState(false);
+                }
+                controlframeSyn();
 
             }
         });
@@ -142,6 +150,12 @@ public class ControlFrame extends JFrame {
 
     }
 
+    public void controlframeSyn() {
+        synchronized (synchro) {
+            synchro.notifyAll();
+        }
+    }
+
     public List<Immortal> setupInmortals() {
 
         ImmortalUpdateReportCallback ucb=new TextAreaUpdateReportCallback(output,scrollPane);
@@ -152,7 +166,7 @@ public class ControlFrame extends JFrame {
             List<Immortal> il = new LinkedList<Immortal>();
 
             for (int i = 0; i < ni; i++) {
-                Immortal i1 = new Immortal("im" + i, il, DEFAULT_IMMORTAL_HEALTH, DEFAULT_DAMAGE_VALUE,ucb);
+                Immortal i1 = new Immortal("im" + i, il, DEFAULT_IMMORTAL_HEALTH, DEFAULT_DAMAGE_VALUE,ucb, synchro);
                 il.add(i1);
             }
             return il;
